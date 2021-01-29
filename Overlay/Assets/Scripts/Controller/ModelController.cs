@@ -66,13 +66,12 @@ namespace Controller
             }
 
             _isPanning &= Input.GetMouseButton(1);
-            if (_isPanning)
-            {
-                var curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _screenPoint.z);
+            if (!_isPanning) return;
+            
+            var curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _screenPoint.z);
 
-                var curPosition = _cameraMain.ScreenToWorldPoint(curScreenPoint) + _offset;
-                transform.position = curPosition;
-            }
+            var curPosition = _cameraMain.ScreenToWorldPoint(curScreenPoint) + _offset;
+            transform.position = curPosition;
         }
 
         private void LateUpdate()
@@ -90,6 +89,10 @@ namespace Controller
             transform.Rotate (new Vector3(RotationY,-RotationX,0), Space.World);
         }
 
-        
+        public void MoveWithVector(IO.PacketIn packet)
+        {
+            var vec = new Vector3(packet.X, packet.Y, packet.Z);
+            transform.position += vec;
+        }
     }
 }

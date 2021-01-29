@@ -6,13 +6,13 @@ namespace Request
 {
     public class Client : MonoBehaviour
     {
+        public Payload payload;
+        
         [SerializeField] private string host;
         [SerializeField] private string port;
         private Listener _listener;
         private Thread _thread;
-
-        public AsyncReadback ar;
-
+        
         private void Start()
         {
             _listener = new Listener(host, port, HandleMessage);
@@ -30,7 +30,8 @@ namespace Request
         private void SendRequest()
         {
             EventManager.Instance.onClientBusy.Invoke();
-            _thread = new Thread(() => _listener.RequestMessageAsync(ar.frame));
+            var message = payload.Encode();
+            _thread = new Thread(() => _listener.RequestMessageAsync(message));
             _thread.Start();
         }
 
@@ -41,7 +42,7 @@ namespace Request
 
         private void HandleMessage(string message)
         {
-            Debug.Log(message);
+            payload.Decode(message);
             EventManager.Instance.onClientFree.Invoke();
         }
     }

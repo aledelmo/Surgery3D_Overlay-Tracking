@@ -9,13 +9,13 @@ namespace IO
     public class AsyncReadback : MonoBehaviour
     {
         public VideoPlayer vp;
-        public string frame;
+        public string Frame { get; private set; }
 
         private IEnumerator Start()
         {
             for (;;)
             {
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(.25f);
                 yield return new WaitForEndOfFrame();
                 
                 var vpTexture = vp.texture;
@@ -39,7 +39,7 @@ namespace IO
             var tex = new Texture2D(vpTexture.width, vpTexture.height, TextureFormat.ARGB32, false);
             tex.LoadRawTextureData(request.GetData<uint>());
             tex.Apply();
-            frame = Convert.ToBase64String(tex.EncodeToPNG());
+            Frame = Convert.ToBase64String(tex.EncodeToPNG());
         }
     }
 }

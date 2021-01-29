@@ -389,8 +389,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 1251736754}
---- !u!4 &546703448
-Transform:
+--- !u!224 &546703448
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -404,6 +404,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &753455503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1046,9 +1051,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a282c66bc203d14d94c34d0c6b2bbda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  payload: {fileID: 366752029999421302}
   host: localhost
-  port: 12345
-  ar: {fileID: 1890857482}
+  port: 5555
 --- !u!4 &1394824544
 Transform:
   m_ObjectHideFlags: 0
@@ -1265,7 +1270,7 @@ VideoPlayer:
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
   m_Looping: 0
-  m_WaitForFirstFrame: 1
+  m_WaitForFirstFrame: 0
   m_FrameReadyEventEnabled: 0
 --- !u!114 &1890857482
 MonoBehaviour:
@@ -1274,13 +1279,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1890857479}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d68eec23ff446dfb98cfed78a2c1dbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   vp: {fileID: 1890857481}
-  frameLength: 
 --- !u!1 &2133588338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1357,6 +1361,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5575977810494665268}
   - component: {fileID: 366752029999421301}
+  - component: {fileID: 366752029999421302}
+  - component: {fileID: 366752029999421303}
   m_Layer: 0
   m_Name: EventManager
   m_TagString: Untagged
@@ -1388,6 +1394,34 @@ MonoBehaviour:
   onClientFree:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &366752029999421302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366752029999421300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201a9c3ded48440fbb58387db583ce06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ar: {fileID: 1890857482}
+  parametersSync: {fileID: 366752029999421303}
+  modelController: {fileID: 546703447}
+--- !u!114 &366752029999421303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366752029999421300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa06e44ba6874895ade7dbe1c9d4d909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pivotTransform: {fileID: 546703448}
 --- !u!223 &1652207813579985936
 Canvas:
   m_ObjectHideFlags: 0
@@ -1505,6 +1539,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connectButton: {fileID: 173982640}
   disconnectButton: {fileID: 195778372}
+  asyncReadback: {fileID: 1890857482}
+  vp: {fileID: 1890857481}
 --- !u!4 &5575977810494665268
 Transform:
   m_ObjectHideFlags: 0
