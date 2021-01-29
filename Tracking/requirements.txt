@@ -2,3 +2,4 @@ pyzmq~=21.0.1
 numpy~=1.19.5
 matplotlib~=3.3.3
 pillow~=8.1.0
+pyyaml~=5.4.1
