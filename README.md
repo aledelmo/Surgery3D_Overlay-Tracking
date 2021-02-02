@@ -1,6 +1,8 @@
 # Surgery3D - *Overlay & Tracking*
 System for 3D models overlay and real-time surgical video tracking of organs.
 
+![gif](https://i.imgur.com/N61ZL78.gif)
+
 This is an [Unity3D](https://unity.com) project that communicates with a local Python server in order to overlay patients 3D models generated 
 with [TensorFlow](https://www.tensorflow.org) (check out this repo [aledelmo/APMRI-DNN](https://github.com/aledelmo/APMRI-DNN)) to the corresponding surgical operation video. Communication to the server established using [ZeroMQ](https://www.zeromq.org). Organs
 movements are real-time tracked from video frames using [OpenCV](http://www.opencv.org). 3D models position is adjusted accordingly.
