@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
 namespace Controller
 {
@@ -16,6 +17,10 @@ namespace Controller
         private const float SensX = 300.0f;
         private const float SensY = 300.0f;
         private Renderer _ren;
+        
+        private static readonly int SrcBlend = Shader.PropertyToID("_SrcBlend");
+        private static readonly int DstBlend = Shader.PropertyToID("_DstBlend");
+        private static readonly int ZWrite = Shader.PropertyToID("_ZWrite");
 
         private void Awake()
         {
@@ -35,6 +40,22 @@ namespace Controller
 
             var cameraTransform = _cameraMain.transform;
             cameraTransform.position = transform.position + new Vector3(0, 0, -moveZ);
+            
+            foreach (Transform child in model.transform)
+            {
+                _ren = child.gameObject.GetComponentInChildren<Renderer>();
+
+                var material = _ren.material;
+                material.SetOverrideTag("RenderType", "Transparent");
+                material.SetInt(SrcBlend, (int) BlendMode.One);
+                material.SetInt(DstBlend, (int) BlendMode.OneMinusSrcAlpha);
+                material.SetInt(ZWrite, 0);
+                material.DisableKeyword("_ALPHATEST_ON");
+                material.DisableKeyword("_ALPHABLEND_ON");
+                material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+                material.renderQueue = 3000;
+            }
+            
         }
         
         private float FitContent()
@@ -89,10 +110,10 @@ namespace Controller
             transform.Rotate (new Vector3(RotationY,-RotationX,0), Space.World);
         }
 
-        public void MoveWithVector(IO.PacketIn packet)
+        public void MoveWithVector(Vector3 t, Vector3 r)
         {
-            var vec = new Vector3(packet.X, packet.Y, packet.Z);
-            transform.position += vec;
+            transform.position += t;
+            transform.Rotate(r);
         }
     }
 }

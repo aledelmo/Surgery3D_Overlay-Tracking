@@ -16,25 +16,30 @@ namespace IO
         public float X;
         public float Y;
         public float Z;
+        public float Rx;
+        public float Ry;
+        public float Rz;
     }
     
     public class Payload : MonoBehaviour
     {
-        public AsyncReadback ar;
+        public AsyncReadback asyncReadback;
         public ParametersSync parametersSync;
         public ModelController modelController;
 
         public string Encode()
         {
             var packet = new PacketOut {X = parametersSync.X, Y = parametersSync.Y, Z = parametersSync.Z,
-                Image = ar.Frame};
+                Image = asyncReadback.Frame};
             return JsonUtility.ToJson(packet);
         }
 
         public void Decode(string reply)
         {
             var json = JsonUtility.FromJson<PacketIn>(reply);
-            Dispatcher.RunOnMainThread(() => modelController.MoveWithVector(json));
+            var tra = new Vector3(json.X, json.Y, json.Z);
+            var rot = new Vector3(json.Rx, json.Ry, json.Rz);
+            Dispatcher.RunOnMainThread(() => modelController.MoveWithVector(tra, rot));
         }
     }
 }

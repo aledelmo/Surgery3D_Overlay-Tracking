@@ -4,7 +4,7 @@ namespace IO
 {
     public class ParametersSync : MonoBehaviour
     {
-        public RectTransform pivotTransform;
+        public Transform pivotTransform;
         
         public float X { get; private set; }
         public float Y { get; private set; }

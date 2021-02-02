@@ -11,7 +11,19 @@ namespace IO
         public VideoPlayer vp;
         public string Frame { get; private set; }
 
-        private IEnumerator Start()
+        private Coroutine _readback;
+
+        private void OnEnable()
+        {
+            _readback = StartCoroutine(Readback());
+        }
+
+        private void OnDisable()
+        {
+            StopCoroutine(_readback);
+        }
+
+        private IEnumerator Readback()
         {
             for (;;)
             {
