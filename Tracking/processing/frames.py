@@ -50,7 +50,7 @@ class Tracking:
     def get_coords(self) -> list:
         """
             Analyze the displacements between two consecutive frames and return the correspondent translations and
-            rotations for 3D models adjustments.
+            rotations for 3D models adjustments. // renvoie les changements de position de la caméra
             :return: x, y, z translations and rx, ry, rz Euler rotation angles
         """
         if len(self.q) < 2:
@@ -69,6 +69,6 @@ class Tracking:
                 m, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
 
                 # TODO: implement homography decomposition to translation vector and rotation matrix
-                return np.random.uniform(-10, 10, 3) * (np.mean(self.q[1].im) - np.mean(self.q[0].im))
+                return np.random.uniform(-10, 10, 6) * (np.mean(self.q[1].im) - np.mean(self.q[0].im))
             else:
                 return [0., 0., 0., 0., 0., 0.]
